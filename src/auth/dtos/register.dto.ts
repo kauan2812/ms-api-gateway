@@ -9,14 +9,14 @@ enum Role {
 
 export class RegisterDto {
   @ApiProperty({
-    description: "Email do usuário",
+    description: "User email",
     example: "user@example.com",
   })
   @IsEmail()
   email: string;
 
   @ApiProperty({
-    description: "Senha do usuário",
+    description: "User password",
     example: "password@123",
     minLength: 6,
   })
@@ -25,21 +25,21 @@ export class RegisterDto {
   password: string;
 
   @ApiProperty({
-    description: "Primeiro nome",
-    example: "João",
+    description: "First name",
+    example: "John",
   })
   @IsString()
   firstName: string;
 
   @ApiProperty({
-    description: "Segundo nome",
-    example: "Silva",
+    description: "Last name",
+    example: "Doe",
   })
   @IsString()
   lastName: string;
 
   @ApiProperty({
-    description: "Role do usuário",
+    description: "User role",
     example: "user",
     enum: ["user", "admin", "seller"],
     required: false,

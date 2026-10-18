@@ -63,17 +63,17 @@ async function bootstrap() {
     .setTitle("API Gateway")
     .setDescription(
       `
-        API Gateway para o sistema de Marketplace com microserviços
+        API Gateway for the Marketplace microservices system
 
-        Serviços Disponíveis:
-          - Users Service: Autenticação e gestão de usuários
-          - Products Service: Catálogo e gestão de produtos
-          - Checkout Service: Carrinho e processamento de pedidos
-          - Payments Service: Processamento de pagamentos
+        Available services:
+          - Users Service: User authentication and management
+          - Products Service: Product catalog and management
+          - Checkout Service: Cart and order processing
+          - Payments Service: Payment processing
 
-        Autenticação:
-          - Use JWT Bearer token para rotas protegidas
-          - Use Session token para validação de sessão
+        Authentication:
+          - Use a JWT Bearer token for protected routes
+          - Use a session token for session validation
       `,
     )
     .setVersion("1.0")
@@ -103,12 +103,12 @@ async function bootstrap() {
       },
       "session-auth",
     )
-    .addTag("Authentication", "Endpoints para autenticação e autorização")
-    .addTag("Users", "Endpoints para gestão de usuários")
-    .addTag("Products", "Endpoints para catálogo de produtos")
-    .addTag("Checkout", "Endpoints para carrinho e pedidos")
-    .addTag("Payments", "Endpoints para processamento de pagamentos")
-    .addTag("Health", "Endpoints para monitoramento de saúde")
+    .addTag("Authentication", "Authentication and authorization endpoints")
+    .addTag("Users", "User management endpoints")
+    .addTag("Products", "Product catalog endpoints")
+    .addTag("Checkout", "Cart and order endpoints")
+    .addTag("Payments", "Payment processing endpoints")
+    .addTag("Health", "Health monitoring endpoints")
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
