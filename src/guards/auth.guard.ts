@@ -7,6 +7,12 @@ import { Reflector } from "@nestjs/core";
 import { AuthGuard } from "@nestjs/passport";
 import { Observable } from "rxjs";
 
+interface JwtUser {
+  userId: string;
+  email: string;
+  role: string;
+}
+
 @Injectable()
 export class JwtGuard extends AuthGuard("jwt") {
   constructor(private readonly reflector: Reflector) {
@@ -28,10 +34,16 @@ export class JwtGuard extends AuthGuard("jwt") {
     return super.canActivate(context);
   }
 
-  handleRequest(err: any, user: any, info: any) {
+  handleRequest<TUser = JwtUser>(
+    err: Error | null,
+    user: JwtUser | false,
+    _info: unknown,
+    _ctx: ExecutionContext,
+    _status?: unknown,
+  ): TUser {
     if (err || !user) {
       throw err || new UnauthorizedException();
     }
-    return user;
+    return user as TUser;
   }
 }
