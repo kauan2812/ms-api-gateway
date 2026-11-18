@@ -1,5 +1,5 @@
 import { Injectable, Logger } from "@nestjs/common";
-import { healthStatus, ServiceHealthInterface } from "./health-check.interface";
+import { HealthStatus, ServiceHealthInterface } from "./health-check.interface";
 import { HttpService } from "@nestjs/axios";
 import { CircuitBreakerService } from "../circuit-breaker/circuit-breaker.service";
 import { serviceConfig } from "src/config/gateway.config";
@@ -49,7 +49,7 @@ export class HealthCheckService {
       const serviceHealh: ServiceHealthInterface = {
         name: serviceName,
         url: service.url,
-        status: healthStatus.HEALTHY,
+        status: HealthStatus.HEALTHY,
         responseTime,
         lastChecked: new Date(),
       };
@@ -62,7 +62,7 @@ export class HealthCheckService {
       const serviceHealh: ServiceHealthInterface = {
         name: serviceName,
         url: service.url,
-        status: healthStatus.UNHEALTHY,
+        status: HealthStatus.UNHEALTHY,
         responseTime,
         lastChecked: new Date(),
         error: err.message,
@@ -77,7 +77,7 @@ export class HealthCheckService {
     }
   }
 
-  async checkAllService(): Promise<ServiceHealthInterface[]> {
+  async checkAllServices(): Promise<ServiceHealthInterface[]> {
     const services: (keyof typeof serviceConfig)[] = [
       "users",
       "products",
@@ -96,7 +96,7 @@ export class HealthCheckService {
         return {
           name: services[index],
           url: serviceConfig[services[index]].url,
-          status: healthStatus.UNHEALTHY,
+          status: HealthStatus.UNHEALTHY,
           responseTime: 0,
           lastChecked: new Date(),
           error: result.reason?.message || "Unknown error",
@@ -105,9 +105,7 @@ export class HealthCheckService {
     });
   }
 
-  getCachedHealth(
-    serviceName: keyof typeof serviceConfig,
-  ): ServiceHealthInterface | undefined {
+  getCachedHealth(serviceName: string): ServiceHealthInterface | undefined {
     return this.healthCache.get(serviceName);
   }
 
